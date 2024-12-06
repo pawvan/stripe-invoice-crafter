@@ -7,7 +7,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 const {generatePDF} = require('../src/pdfGenerator')
-test('',()=>{
+test('should generate the PDF file for the invoice ',()=>{
     const invoiceData = { id: 'inv_12345', customerId: 'cus_12345', amount_due: 500 };
     const filePath = generatePDF(invoiceData)
     expect(filePath).toBeDefined();

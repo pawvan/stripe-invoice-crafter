@@ -3,21 +3,24 @@
  *
  * Author: Pawvan
  *
- * This source code is li
- * LICENSE file in the ro
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
  */
-const PDFDocument = require('pdfkit');
-const fs = require('fs')
-const generatePDF=(invoiceData)=>{
-    const doc = new PDFDocument()
-    const filePath =`./dist/invoices/${invoiceData.id}.pdf`;
-    doc.pipe(fs.createWriteStream(filePath));
-    doc.fontSize(25).text('Invoice', { align: 'center' });
-    doc.text(`Customer: ${invoiceData.customerId}`, 100, 100);
-    doc.text(`Amount Due: $${invoiceData.amount_due}`, 100, 120);
-doc.end()
-return filePath;
+const stripe = require('stripe')(process.env.STRIPE_API_KEY)
+const createInvoice = async (customerId,items)=>{
+    try{
+const invoice = await stripe.invoices.create({
+    customer:customerId,
+    auto_advance:true,
+    collection_method:'charge_automatically',
+    description:'Invoice for your purchases',
+    amount_due:items.reduce((acc,item)=>acc+item.amount,0),
+    currency:'usd'
+})
 }
-module.exports={
-    generatePDF
-};
+    catch(error){
+
+        console.error('Error creating invoice :',error)
+    }
+}
+module.exports={createInvoice};
