@@ -1,0 +1,17 @@
+{
+  "name": "stripe-invoice-crafter",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "dotenv": "^16.4.7",
+    "pdfkit": "^0.15.1",
+    "stripe": "^17.4.0"
+  }
+}
